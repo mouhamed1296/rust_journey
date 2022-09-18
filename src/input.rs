@@ -1,5 +1,7 @@
+#![allow(dead_code)]
+
 use std::{
-    fmt::{Debug, Display},
+    fmt::{Debug, Display, Formatter},
     str::FromStr,
 };
 
@@ -18,16 +20,29 @@ pub fn trim_newline(mut line: String) -> String {
 
     return line;
 }
+#[derive(Debug)]
+pub struct E {
+    message: String,
+}
 
-pub struct E;
+impl Display for E {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({})", self.message)
+    }
+}
 
-pub fn parse_input<T: FromStr + Display + Debug>(line: String) -> Result<T, E> {
+pub fn parse_input<T: FromStr + Display + Debug>(line: String) -> core::result::Result<T, E> {
     match trim_newline(line).parse::<T>() {
         Ok(i) => {
             let n = i;
             return Ok(n);
         }
-        Err(_) => Err(E),
+        Err(_) => panic!(
+            "{}",
+            E {
+                message: String::from("Type incompatibility")
+            }
+        ),
     }
 }
 
@@ -52,7 +67,7 @@ pub fn get_input_f32() -> f32 {
 }
 
 pub fn get_input_f64() -> f64 {
-    return parse_input::<f64>(get_line()).unwrap_or(0.0);
+    return parse_input::<f64>(get_line()).unwrap();
 }
 
 #[cfg(test)]
