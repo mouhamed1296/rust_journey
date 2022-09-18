@@ -31,6 +31,30 @@ pub fn parse_input<T: FromStr + Display + Debug>(line: String) -> Result<T, E> {
     }
 }
 
+pub fn get_input_i64() -> i64 {
+    return parse_input::<i64>(get_line()).unwrap_or(0);
+}
+
+pub fn get_input_i32() -> i32 {
+    return parse_input::<i32>(get_line()).unwrap_or(0);
+}
+
+pub fn get_input_u32() -> u32 {
+    return parse_input::<u32>(get_line()).unwrap_or(0);
+}
+
+pub fn get_input_u64() -> u64 {
+    return parse_input::<u64>(get_line()).unwrap_or(0);
+}
+
+pub fn get_input_f32() -> f32 {
+    return parse_input::<f32>(get_line()).unwrap_or(0.0);
+}
+
+pub fn get_input_f64() -> f64 {
+    return parse_input::<f64>(get_line()).unwrap_or(0.0);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
