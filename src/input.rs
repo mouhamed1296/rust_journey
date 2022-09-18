@@ -12,12 +12,10 @@ pub fn get_line() -> String {
 }
 
 pub fn trim_newline(mut line: String) -> String {
-    if line.ends_with("\n") {
+    while line.ends_with("\n") || line.ends_with("\r") {
         line.pop();
     }
-    if line.ends_with("\r") {
-        line.pop();
-    }
+
     return line;
 }
 
@@ -38,10 +36,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_get_line() {
-        let line = get_line();
-        assert_eq!(line, "sarr\n");
-        assert_ne!(line, "sarr");
+    fn test_trim_newline() {
+        assert_eq!(trim_newline(String::from("line1\n")), "line1");
+        assert_eq!(trim_newline(String::from("line1\r")), "line1");
+        assert_eq!(trim_newline(String::from("line1\r\n")), "line1");
+        assert_eq!(trim_newline(String::from("line1\n\r")), "line1");
+        assert_eq!(trim_newline(String::from("line1\n\r\r\n\n\n\n\r")), "line1");
     }
 
     #[test]
